@@ -1026,9 +1026,12 @@ Use the previous section tag as the tag of the split section. "
 		    (level (+ (org-export-get-relative-level headline info)
 			      (1- (plist-get info :html-toplevel-hlevel))))
 		    (numberedp (org-export-numbered-headline-p headline info))
-		    (numbers (org-export-get-headline-number headline info)))
-	       (format "\n<h%d>%s</h%d>"
+		    (numbers (org-export-get-headline-number headline info))
+                    (headline-class (org-element-property :HTML_HEADLINE_CLASS headline)))
+	       (format "\n<h%d %s>%s</h%d>"
 		       level
+                       (if (not headline-class) ""
+                         (format " class=\"%s\"" headline-class))
 		       (concat
 			(and numberedp
 			     (format
